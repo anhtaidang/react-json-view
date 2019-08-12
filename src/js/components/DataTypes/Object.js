@@ -282,6 +282,28 @@ class RjvObject extends React.PureComponent {
                         {...props}
                     />
                 );
+            } else if(variable.value instanceof Map) {
+                let ObjectComponent = JsonObject;
+
+                if (
+                    groupArraysAfterLength &&
+                    variable.value.length > groupArraysAfterLength
+                ) {
+                    ObjectComponent = ArrayGroup;
+                }
+
+                elements.push(
+                    <ObjectComponent
+                        key={variable.name}
+                        depth={depth + DEPTH_INCREMENT}
+                        name={variable.name}
+                        src={Array.from(variable.value)}
+                        namespace={namespace.concat(variable.name)}
+                        type="array"
+                        parent_type={object_type}
+                        {...props}
+                    />
+                );
             } else {
                 elements.push(
                     <VariableEditor
